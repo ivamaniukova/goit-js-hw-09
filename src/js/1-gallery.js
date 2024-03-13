@@ -1,3 +1,6 @@
+import SimpleLightbox from 'simplelightbox';
+import "simplelightbox/dist/simple-lightbox.min.css";
+
 const images = [
       {
         preview:
@@ -63,41 +66,35 @@ const images = [
         description: 'Lighthouse Coast Sea',
       },
     ];
-//    const container = document.querySelector(".gallery");
+   const container = document.querySelector(".gallery");
 
-//    const galleryItems = images.map(({preview, original, description}) => {
-//         const galleryItem = document.createElement("li");
-//         galleryItem.classList.add("gallery-item");
+   const galleryItems = images.map(({preview, original, description}) => {
+        const galleryItem = document.createElement("li");
+        galleryItem.classList.add("gallery-item");
 
-//         const galleryLink = document.createElement("a");
-//         galleryLink.classList.add("gallery-link");
-//         galleryLink.href = original;
+        const galleryLink = document.createElement("a");
+        galleryLink.classList.add("gallery-link");
+        galleryLink.href = original;
 
-//         const galleryImage = document.createElement("img");
-//         galleryImage.classList.add("gallery-image");
-//         galleryImage.src = preview;
-//         galleryImage.dataset.source = original;
-//         galleryImage.alt = description;
+        const galleryImage = document.createElement("img");
+        galleryImage.classList.add("gallery-image");
+        galleryImage.src = preview;
+        galleryImage.alt = description;
 
-//         galleryLink.appendChild(galleryImage);
-//         galleryItem.appendChild(galleryLink);
-//         return galleryItem;
+        galleryLink.appendChild(galleryImage);
+        galleryItem.appendChild(galleryLink);
+        return galleryItem;
 
-//    });
+   });
 
-//    galleryItems.forEach(galleryItem => {
-//     container.appendChild(galleryItem);
-//    });
-
-//    container.addEventListener('click', handleModalOpen);
+   galleryItems.forEach(galleryItem => {
+    container.appendChild(galleryItem);
+   });
    
-//    function handleModalOpen(event){
-//     event.preventDefault();
-//     if(event.currentTarget === event.target) return;
-//     if (event.target.tagName === 'IMG') {
-//         const originalSource = event.target.dataset.source;
-//         const lightbox = basicLightbox.create(`<img src="${originalSource}">`);
-//         lightbox.show();}
+   const gallery = new SimpleLightbox('.gallery a',{
+    captionsData: 'alt',
+    captionDelay: 250
+   });
 
-//    };
+
    
