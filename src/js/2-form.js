@@ -3,17 +3,8 @@ const lskey = 'feedback-form-state';
 const email = form.elements.email;
 const message = form.elements.message;
 
-const save = () => {
-  const formData = {
-    email: form.elements.email.value.trim(),
-    message: form.elements.message.value.trim(),
-  };
-  localStorage.setItem('feedback-form-state', JSON.stringify(formData));
-};
-form.addEventListener('input', save);
-
 const load = () => {
-  const saveData = localStorage.getItem('feedback-form-state');
+  const saveData = localStorage.getItem(lskey);
   if (saveData) {
     const { email, message } = JSON.parse(saveData);
     form.elements.email.value = email;
@@ -21,17 +12,34 @@ const load = () => {
   }
 };
 
-window.addEventListener('load', load);
+window.addEventListener('DOMContentLoaded', load);
+
+const save = () => {
+  const formData = {
+    email: form.elements.email.value.trim(),
+    message: form.elements.message.value.trim(),
+  };
+  localStorage.setItem(lskey, JSON.stringify(formData));
+};
+form.addEventListener('input', save);
 
 form.addEventListener('submit', e => {
   e.preventDefault();
-  localStorage.removeItem('feedback-form-state');
-  if (form.elements.email.value === '' || form.elements.message.value === '') {
-    alert('No data entered!');
-  }
+
   console.log({
     email: form.elements.email.value.trim(),
     message: form.elements.message.value.trim(),
   });
+
+  if (form.elements.email.value === '') {
+    alert('No email entered!');
+    return;
+  }
+  if (form.elements.message.value === '') {
+    alert('No message entered!');
+    return;
+  }
+  
   form.reset();
+  localStorage.removeItem(lskey);
 });
